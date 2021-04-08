@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	arr := []int{1, 4, 3, 5, 4, 6, 2, 3}
-	newArr := insertSort.InsertSort(arr)
+	arr := []int{1, 4, 7, 20, 4}
+	newArr := insertSort.ComoSort(arr)
 	fmt.Println(newArr)
 }
