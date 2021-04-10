@@ -87,3 +87,32 @@ func HeapSort(arr []int) (res []int) {
 	}
 	return res
 }
+
+// 从大量数据中获取前n个最大的数
+func NMaxV(arr []int, digit int) []int {
+	if len(arr) <= digit {
+		return HeapSort(arr)
+	}
+
+	var minHeap Heap
+	for i := 0; i < digit; i++ {
+		minHeap = append(minHeap, arr[i])
+	}
+	if minHeap == nil {
+		return arr
+	}
+
+	for i := digit; i < len(arr); i++ {
+		if minHeap[0] < arr[i] {
+			minHeap[0], arr[i] = arr[i], minHeap[0]
+			minHeap.Init()
+		}
+	}
+
+	var res []int
+	for len(minHeap) != 0 {
+		res = append(res, minHeap.Pop())
+	}
+
+	return res
+}
