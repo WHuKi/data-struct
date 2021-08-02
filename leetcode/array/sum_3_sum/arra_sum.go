@@ -1,4 +1,4 @@
-package array
+package sum_3_sum
 
 import "sort"
 
