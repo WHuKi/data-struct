@@ -1,21 +1,28 @@
 package insertSort
 
-// shell insert sort
+//ShellInsert 希尔排序
 func ShellInsert(arr []int, dk int) []int {
 	if len(arr) <= 1 {
 		return arr
 	}
 
-	for i := dk + 1; i < len(arr); i++ {
-		if arr[i] < arr[i-dk] {
-			arr[0] = arr[i]
-			j := i - dk
-			for ; j > 0 && arr[0] < arr[j]; j = j - dk {
-				arr[j+dk] = arr[j]
-			}
-			arr[j+dk] = arr[0]
+	length := len(arr)
+	// 步长
+	step := length / dk
+	for step >= 1 {
+		for i := step; i < length; i++ {
+			insertionSortByStep(arr, i)
 		}
+		step /= dk
 	}
 
-	return arr[1:]
+	return arr
+}
+
+func insertionSortByStep(arr []int, step int) {
+	for i := step; i < len(arr); i++ {
+		for j := i; j > step-1 && arr[j-step] > arr[j]; j -= step {
+			arr[j-step], arr[j] = arr[j], arr[j-step]
+		}
+	}
 }
