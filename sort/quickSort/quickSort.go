@@ -1,25 +1,51 @@
 package quickSort
 
 //QuickSort 普通快速排序
-func QuickSort(arr []int) []int {
+/*
+@brief: 快速排序
+@step:
+1. 找出基准值
+2. 定义左向量、右向量
+	2.1 并且左向量向右移动直到找到比基准值大的数值
+	2.2 右向量向左移动直到找到比基准值小的数值
+	2.3 如果此时左向量下标比右向量的下标小则交换左向量和右向量的值，左向量和右向量都加一
+3. 如果左向量比尾节点的数值小则递归该函数
+4. 如果右向量比左节点的数值小则递归该函数
+*/
+func QuickSort(startIndex, endIndex int, arr []int) []int {
 	if len(arr) <= 1 {
 		return arr
 	}
-
-	midData := (arr[0] + arr[(len(arr)-1)/2] + arr[len(arr)-1]) / 3
-	low, mid, high := make([]int, 0), make([]int, 0), make([]int, 0)
-	for i := 0; i < len(arr); i++ {
-		if arr[i] == midData {
-			mid = append(mid, arr[i])
-		} else if arr[i] < midData {
-			low = append(low, arr[i])
-		} else {
-			high = append(high, arr[i])
+	// 1. 定义基准值、左向量、右向量
+	pivot := arr[(startIndex+endIndex)/2]
+	l, r := startIndex, endIndex
+	// 2. 处理
+	for l <= r {
+		// 左向量
+		for arr[l] < pivot {
+			l++
+		}
+		// 右向量
+		for arr[r] > pivot {
+			r--
+		}
+		// 处理
+		if l <= r {
+			arr[l], arr[r] = arr[r], arr[l]
+			l++
+			r--
 		}
 	}
-	low, high = QuickSort(low), QuickSort(high)
+	// 3. 如果左向量比尾节点的数值小则递归该函数
+	if l < endIndex {
+		QuickSort(l, endIndex, arr)
+	}
+	// 4. 如果右向量比左节点的数值小则递归该函数
+	if r > startIndex {
+		QuickSort(startIndex, r, arr)
+	}
 
-	return append(append(low, mid...), high...)
+	return arr
 }
 
 //ThreeWayQuickSort 三向切分快速排序
