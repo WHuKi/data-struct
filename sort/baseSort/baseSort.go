@@ -1,5 +1,13 @@
 package baseSort
 
+import (
+	"math"
+	"strconv"
+)
+
+/*
+version:v1
+*/
 func BaseSort(arr []int) []int {
 	if len(arr) <= 1 {
 		return arr
@@ -62,4 +70,52 @@ func arrMaxVDigit(arr []int) int {
 	}
 
 	return maxDigit
+}
+
+/*
+version:v2
+*/
+//BaseSort 基数排序
+func RadixSort(arr []int) []int {
+	// 1. 取最大值长度
+	maxValueLen := 0
+	for i := 0; i < len(arr); i++ {
+		// 取数字的最大值并转换为字符串
+		n := len(strconv.Itoa(arr[i]))
+		if n > maxValueLen {
+			maxValueLen = n
+		}
+	}
+	// 2. 排序
+	for loc := 1; loc <= maxValueLen; loc++ {
+		sort(arr, loc)
+	}
+
+	return arr
+}
+
+func sort(arr []int, loc int) {
+	// 1. 初始化桶
+	bucket := make([][]int, 10)
+	// 2. 取各个数字到bucket中
+	for i := 0; i < len(arr); i++ {
+		ji := digit(arr[i], loc)
+		if bucket[ji] == nil {
+			bucket[ji] = make([]int, 0)
+		}
+		bucket[ji] = append(bucket[ji], arr[i])
+	}
+	// 3. 收集二维数组
+	for i, idx := 0, 0; i <= 9; i++ {
+		for j := 0; j < len(bucket[i]); j++ {
+			// 遍历二维数组
+			arr[idx] = bucket[i][j] //将数字取出来 给原数组重新赋值
+			idx++
+		}
+	}
+}
+
+// 数字，右数第几位，从1开始
+func digit(num int, loc int) int {
+	return num % int(math.Pow10(loc)) / int(math.Pow10(loc-1))
 }
