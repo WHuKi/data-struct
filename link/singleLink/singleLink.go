@@ -65,9 +65,9 @@ func (node *Node) TraverseLink() {
 	if node.IsEmpty() {
 		return
 	}
-	for node.NextPtr != nil {
-		node = node.NextPtr
+	for node != nil {
 		fmt.Println(node.Data)
+		node = node.NextPtr
 	}
 }
 
@@ -92,4 +92,47 @@ func (node *Node) IsEmpty() bool {
 		return true
 	}
 	return false
+}
+
+//GetMidNode 找到中间节点
+/*
+@brief
+1. 利用快慢指针的思路来获取中间节点
+2. 就是利用快指针走两步慢指针走一步的差距，当快指针走到最后的时候慢指针刚好走一半
+*/
+func (node *Node) GetMidNode() *Node {
+	// 快指针
+	fast := node
+	// 慢指针
+	low := node
+	for fast.NextPtr.NextPtr != nil && low.NextPtr != nil {
+		fast = fast.NextPtr.NextPtr
+		low = low.NextPtr
+	}
+	return low
+}
+
+/*
+Reverse
+@brief: 链表反转
+*/
+func (node *Node) Reverse() *Node {
+	if node == nil {
+		return nil
+	}
+	// 前躯节点和后继节点
+	pre := new(Node)
+	cur := node.NextPtr
+	for cur != nil {
+		// 1. 保存后继节点
+		next := cur.NextPtr
+		// 2. 后继节点与当前节点断开
+		cur.NextPtr = pre
+		// 3. 见当前节点赋予断开
+		pre = cur
+		// 4. 往后移动
+		cur = next
+	}
+
+	return pre
 }
