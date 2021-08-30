@@ -14,4 +14,6 @@ func main() {
 	fmt.Println("......")
 	n := node.Reverse()
 	n.TraverseLink()
+
+	fmt.Println(n.LinkedLoopDetection())
 }
