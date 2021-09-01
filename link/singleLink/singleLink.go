@@ -102,10 +102,10 @@ func (node *Node) IsEmpty() bool {
 */
 func (node *Node) GetMidNode() *Node {
 	// 快指针
-	fast := node
+	fast := node.NextPtr
 	// 慢指针
-	low := node
-	for fast.NextPtr.NextPtr != nil && low.NextPtr != nil {
+	low := node.NextPtr
+	for fast != nil && fast.NextPtr != nil {
 		fast = fast.NextPtr.NextPtr
 		low = low.NextPtr
 	}
@@ -192,4 +192,44 @@ func MergeSortedLink(node1, node2 *Node) (res *Node) {
 	}
 
 	return nil
+}
+
+/*
+DelNNode
+删除链表倒数第 n 个结点
+*/
+func DelNNode(node *Node, m int) {
+	if node == nil {
+		return
+	}
+
+	// 1. 链表反转
+	pre := new(Node)
+	cur := node.NextPtr
+	for cur != nil {
+		next := cur.NextPtr
+		cur.NextPtr = pre
+		pre = cur
+		cur = next
+	}
+
+	// 2. 找到第N个节点
+	var n int
+	head := node
+	for head.NextPtr != nil {
+		head = head.NextPtr
+		n++
+		if m == n-1 {
+			break
+		}
+	}
+
+	if head.NextPtr != nil {
+		if head.NextPtr.NextPtr != nil {
+		}
+		head.NextPtr = head.NextPtr.NextPtr
+	} else {
+		return
+	}
+
 }

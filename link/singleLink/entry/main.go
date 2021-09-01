@@ -10,10 +10,9 @@ func main() {
 	node.InsertNode(12)
 	node.InsertNode(34)
 	node.InsertNode(56)
+	//node.InsertNode(78)
 	node.TraverseLink()
 	fmt.Println("......")
-	n := node.Reverse()
-	n.TraverseLink()
-
-	fmt.Println(n.LinkedLoopDetection())
+	n := node.GetMidNode()
+	fmt.Println(n.Data)
 }
