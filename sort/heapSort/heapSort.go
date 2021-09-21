@@ -79,6 +79,7 @@ func (h Heap) Init() {
 	}
 }
 
+//HeapSort 堆排序
 func HeapSort(arr []int) (res []int) {
 	h := Heap(arr)
 	h.Init()
@@ -88,7 +89,7 @@ func HeapSort(arr []int) (res []int) {
 	return res
 }
 
-// 从大量数据中获取前n个最大的数
+//NMaxV 从大量数据中获取前n个最大的数
 func NMaxV(arr []int, digit int) []int {
 	if len(arr) <= digit {
 		return HeapSort(arr)
