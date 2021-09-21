@@ -102,15 +102,24 @@ func (node *Node) IsEmpty() bool {
 */
 func (node *Node) GetMidNode() *Node {
 	// 快指针
-	fast := node
+	fast := node.NextPtr
 	// 慢指针
-	low := node
-	for fast.NextPtr.NextPtr != nil && low.NextPtr != nil {
+	low := node.NextPtr
+	for fast != nil && fast.NextPtr != nil {
 		fast = fast.NextPtr.NextPtr
 		low = low.NextPtr
 	}
 	return low
 }
+
+/*
+1.单链表反转
+2.链表中环的检测
+3.两个有序的链表合并
+4.删除链表倒数第 n 个结点
+5.求链表的中间结点
+6.
+*/
 
 /*
 Reverse
@@ -135,4 +144,92 @@ func (node *Node) Reverse() *Node {
 	}
 
 	return pre
+}
+
+/*
+LinkedLoopDetection
+@brief: 链表中环的检测
+*/
+func (node *Node) LinkedLoopDetection() bool {
+	if node == nil {
+		return false
+	}
+
+	slow, fast := node, node
+
+	for fast.NextPtr != nil && fast.NextPtr.NextPtr != nil {
+		fast = fast.NextPtr.NextPtr
+		slow = slow.NextPtr
+
+		if fast == slow {
+			return true
+		}
+	}
+
+	return false
+}
+
+/*
+MergeSortedLink
+@brief 两个有序链表的合并 todo
+*/
+func MergeSortedLink(node1, node2 *Node) (res *Node) {
+	res = new(Node)
+	if node1 == nil {
+		return node2
+	}
+	if node2 == nil {
+		return node1
+	}
+
+	// use
+	if node1.Data.(int) >= node2.Data.(int) {
+		res = node2
+		res.NextPtr = MergeSortedLink(node1, node2.NextPtr)
+	} else {
+		res = node1
+		res.NextPtr = MergeSortedLink(node1.NextPtr, node2)
+	}
+
+	return nil
+}
+
+/*
+DelNNode
+删除链表倒数第 n 个结点
+*/
+func DelNNode(node *Node, m int) {
+	if node == nil {
+		return
+	}
+
+	// 1. 链表反转
+	pre := new(Node)
+	cur := node.NextPtr
+	for cur != nil {
+		next := cur.NextPtr
+		cur.NextPtr = pre
+		pre = cur
+		cur = next
+	}
+
+	// 2. 找到第N个节点
+	var n int
+	head := node
+	for head.NextPtr != nil {
+		head = head.NextPtr
+		n++
+		if m == n-1 {
+			break
+		}
+	}
+
+	if head.NextPtr != nil {
+		if head.NextPtr.NextPtr != nil {
+		}
+		head.NextPtr = head.NextPtr.NextPtr
+	} else {
+		return
+	}
+
 }

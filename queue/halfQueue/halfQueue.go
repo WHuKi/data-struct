@@ -26,3 +26,29 @@ func HalfFind(arr []int, num int) (res int, err error) {
 
 	return
 }
+
+/*
+二分查找变形
+1. 查找第一个等于给定值的元素
+if mid -1 >=0 {
+	if mid ==0 || arr[mid -1] != value {return mid}else {
+		high = mid -1
+	}
+}
+
+2. 查找最后一个等于给定值的元素
+if mid +1 < n {
+	if (mid == n - 1) || arr[mid + 1] != value {return mid}else {
+		low = mid + 1
+	}
+}
+
+3. 查找第一个大于等于给定值的元素
+if (a[mid] >= value) {
+	if mid ==0 || a[mid -1 ] < value {return mid}else{
+		high = mid+1
+ 	}
+}
+
+4. 查找最后一个小于等于给定值的元素
+*/
