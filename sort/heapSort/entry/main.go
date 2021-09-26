@@ -31,14 +31,18 @@ func HeapSort(arr []int) {
 
 func minHeap(root, end int, c []int) {
 	for {
+		// 子节点
 		var child = 2*root + 1
+		// 和最后的节点比较
 		if child > end {
 			break
 		}
-		// 同级节点比较
+
+		// 同级节点比较 （找出左右节点中最大的那个）
 		if child+1 < end && c[child] > c[child+1] {
 			child += 1
 		}
+
 		// 数据交换
 		if c[root] > c[child] {
 			c[root], c[child] = c[child], c[root]
@@ -46,5 +50,6 @@ func minHeap(root, end int, c []int) {
 		} else {
 			break
 		}
+
 	}
 }
